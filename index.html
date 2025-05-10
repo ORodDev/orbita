@@ -11,8 +11,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#00f0ff',
+                        primary: '#1e0b37',
                         secondary: '#7b2dff',
+                        accent: '#00f0ff',
                         dark: '#0a0a1a',
                         darker: '#050510',
                     },
@@ -34,19 +35,19 @@
         }
         
         .gradient-text {
-            background: linear-gradient(90deg, #00f0ff 0%, #7b2dff 100%);
+            background: linear-gradient(90deg, #7b2dff 0%, #00f0ff 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
         
         .hero-gradient {
-            background: radial-gradient(circle at 50% 50%, rgba(123, 45, 255, 0.15) 0%, rgba(0, 240, 255, 0.05) 50%, rgba(5, 5, 16, 0) 70%);
+            background: radial-gradient(circle at 50% 50%, rgba(123, 45, 255, 0.15) 0%, rgba(30, 11, 55, 0.1) 50%, rgba(5, 5, 16, 0) 70%);
         }
         
         .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 240, 255, 0.1), 0 10px 10px -5px rgba(123, 45, 255, 0.04);
+            box-shadow: 0 20px 25px -5px rgba(123, 45, 255, 0.1), 0 10px 10px -5px rgba(0, 240, 255, 0.04);
         }
         
         .glow-effect {
@@ -60,7 +61,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at center, rgba(0, 240, 255, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(123, 45, 255, 0.3) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: -1;
@@ -80,7 +81,7 @@
             width: 120px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.3) 0%, rgba(123, 45, 255, 0.3) 100%);
+            background: linear-gradient(135deg, rgba(123, 45, 255, 0.3) 0%, rgba(0, 240, 255, 0.3) 100%);
             filter: blur(15px);
             animation: pulse 4s infinite alternate;
         }
@@ -96,6 +97,105 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
         }
+        
+        .language-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .language-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .language-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1e1e2d;
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .language-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: #7b2dff;
+        }
+        
+        input:checked + .language-slider {
+            background-color: #1e1e2d;
+        }
+        
+        input:checked + .language-slider:before {
+            transform: translateX(28px);
+            content: "PT";
+        }
+        
+        input:not(:checked) + .language-slider:before {
+            content: "EN";
+        }
+        
+        /* Prevent layout shift when changing language */
+        [data-i18n] {
+            display: inline-block;
+        }
+
+        .nav-links {
+            margin-left: auto;
+            margin-right: 0;
+            padding-right: 0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #7b2dff 0%, #1e0b37 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+        
+        .btn-secondary {
+            border: 1px solid #7b2dff;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(123, 45, 255, 0.1);
+        }
+        
+        .service-icon {
+            background: linear-gradient(135deg, #7b2dff 0%, #1e0b37 100%);
+        }
+
+        .logo-icon {
+            color: #7b2dff; /* Changed from gradient to solid color */
+        }
+
+        .logo-text {
+            color: #7b2dff; /* Solid purple color for ORBITA logo */
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -104,20 +204,26 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <span class="text-2xl font-bold gradient-text">ORBITA</span>
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="logo-icon text-2xl mr-2">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <span class="text-2xl font-bold logo-text">ORBITA</span>
                     </div>
                 </div>
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#services" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Services</a>
-                        <a href="#work" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Our Work</a>
-                        <a href="#about" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
-                        <a href="#contact" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    <div class="ml-10 flex items-baseline space-x-8 nav-links">
+                        <a href="#services" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="nav.services">Services</a>
+                        <a href="#about" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="nav.about">About</a>
+                        <a href="#contact" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="nav.contact">Contact</a>
                     </div>
                 </div>
-                <div class="hidden md:block">
-                    <a href="#contact" class="ml-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
+                <div class="hidden md:flex items-center space-x-6">
+                    <label class="language-toggle">
+                        <input type="checkbox" id="language-switch">
+                        <span class="language-slider"></span>
+                    </label>
+                    <a href="#contact" class="ml-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white btn-primary hover:opacity-90 transition-opacity" data-i18n="nav.start_project">
                         Start Project
                     </a>
                 </div>
@@ -139,52 +245,27 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-8">
                     <h1 class="text-4xl md:text-6xl font-bold leading-tight">
-                        <span class="gradient-text">Immersive</span> Experiences.<br>
-                        <span class="text-white">Beyond Reality.</span>
+                        <span data-i18n="hero.ideas">Ideas that</span> <span class="gradient-text" data-i18n="hero.walk_around">walk around.</span>
                     </h1>
-                    <p class="text-lg text-gray-300 max-w-lg">
-                        ORBITA is a premier virtual reality development studio specializing in cutting-edge VR solutions, 
-                        branded content with UEFN and Roblox, and collaborative development partnerships.
+                    <p class="text-lg text-gray-300 max-w-lg" data-i18n="hero.description">
+                        ORBITA crafts immersive VR experiences that elevate brand presence, spark engagement, and turn storytelling into strategic impact.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                        <a href="#contact" class="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-dark font-bold rounded-lg hover:opacity-90 transition-opacity text-center">
+                        <a href="#contact" class="px-8 py-4 btn-primary text-white font-bold rounded-lg hover:opacity-90 transition-opacity text-center" data-i18n="hero.get_started">
                             Get Started
                         </a>
-                        <a href="#services" class="px-8 py-4 border border-gray-700 text-white font-bold rounded-lg hover:bg-gray-800/50 transition-colors text-center">
+                        <a href="#services" class="px-8 py-4 btn-secondary font-bold rounded-lg hover:bg-gray-800/50 transition-colors text-center" data-i18n="hero.explore_services">
                             Explore Services
                         </a>
                     </div>
                 </div>
                 <div class="relative flex justify-center">
                     <div class="vr-headset">
-                        <img src="https://cdn-icons-png.flaticon.com/512/5969/5969347.png" alt="VR Headset" class="w-64 h-64 object-contain relative z-10">
+                        <img src="./images/Orbita-white-circle" alt="VR Headset" class="w-64 h-64 object-contain relative z-10">
                         <div class="vr-lens" style="top: 30%; left: 25%;"></div>
                         <div class="vr-lens" style="top: 30%; right: 25%;"></div>
                     </div>
                     <div class="absolute inset-0 bg-primary/10 rounded-full filter blur-3xl -z-10 animate-pulse"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Clients Section -->
-    <section class="py-16 bg-darker">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-center text-gray-400 text-sm font-semibold uppercase tracking-wider mb-8">
-                Trusted by industry leaders
-            </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-center">
-                <div class="flex justify-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Unity_Technologies_logo.svg/2560px-Unity_Technologies_logo.svg.png" alt="Unity" class="h-12 opacity-70 hover:opacity-100 transition-opacity">
-                </div>
-                <div class="flex justify-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Unreal_Engine_Logo.svg/1200px-Unreal_Engine_Logo.svg.png" alt="Unreal Engine" class="h-12 opacity-70 hover:opacity-100 transition-opacity">
-                </div>
-                <div class="flex justify-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Roblox_logo.svg/2560px-Roblox_logo.svg.png" alt="Roblox" class="h-12 opacity-70 hover:opacity-100 transition-opacity">
-                </div>
-                <div class="flex justify-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Oculus_VR_Logo_%282021%29.svg/1200px-Oculus_VR_Logo_%282021%29.svg.png" alt="Oculus" class="h-12 opacity-70 hover:opacity-100 transition-opacity">
                 </div>
             </div>
         </div>
@@ -195,135 +276,88 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    <span class="gradient-text">Our Services</span>
+                    <span class="gradient-text" data-i18n="services.title">Our Services</span>
                 </h2>
-                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto" data-i18n="services.description">
                     Comprehensive VR solutions tailored to your business needs, from concept to deployment.
                 </p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Service 1 -->
-                <div class="service-card bg-dark border border-gray-800 rounded-xl p-8 transition-all duration-300 hover:border-primary/30">
-                    <div class="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mb-6">
-                        <i class="fas fa-cubes text-2xl text-dark"></i>
+                <div class="service-card bg-dark border border-gray-800 rounded-xl p-8 transition-all duration-300 hover:border-accent/30">
+                    <div class="service-icon w-14 h-14 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-cubes text-2xl text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Full Product Development</h3>
-                    <p class="text-gray-300 mb-4">
+                    <h3 class="text-xl font-bold mb-3" data-i18n="services.full_dev.title">Full Product Development</h3>
+                    <p class="text-gray-300 mb-4" data-i18n="services.full_dev.description">
                         End-to-end VR development from initial concept to final deployment. We handle design, development, testing, and launch.
                     </p>
                     <ul class="space-y-2 text-gray-400">
                         <li class="flex items-center">
-                            <i class="fas fa-check-circle text-primary mr-2"></i>
-                            Concept ideation
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span data-i18n="services.full_dev.item1">Concept ideation</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-check-circle text-primary mr-2"></i>
-                            Technical architecture
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span data-i18n="services.full_dev.item2">Technical architecture</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-check-circle text-primary mr-2"></i>
-                            Quality assurance
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span data-i18n="services.full_dev.item3">Quality assurance</span>
                         </li>
                     </ul>
                 </div>
                 
                 <!-- Service 2 -->
-                <div class="service-card bg-dark border border-gray-800 rounded-xl p-8 transition-all duration-300 hover:border-primary/30">
-                    <div class="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mb-6">
-                        <i class="fas fa-hands-helping text-2xl text-dark"></i>
+                <div class="service-card bg-dark border border-gray-800 rounded-xl p-8 transition-all duration-300 hover:border-accent/30">
+                    <div class="service-icon w-14 h-14 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-hands-helping text-2xl text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Co-Development</h3>
-                    <p class="text-gray-300 mb-4">
-                        Augment your existing team with our VR experts. Flexible engagement models to suit your project requirements.
+                    <h3 class="text-xl font-bold mb-3" data-i18n="services.co_dev.title">Co-Development</h3>
+                    <p class="text-gray-300 mb-4" data-i18n="services.co_dev.description">
+                        Plug into a creative and hands-on team to bring your interactive ideas to life. We adapt to your workflow with flexible collaboration models that fit your project needs.
                     </p>
                     <ul class="space-y-2 text-gray-400">
                         <li class="flex items-center">
-                            <i class="fas fa-check-circle text-primary mr-2"></i>
-                            Staff augmentation
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span data-i18n="services.co_dev.item1">Staff augmentation</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-check-circle text-primary mr-2"></i>
-                            Project-based collaboration
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span data-i18n="services.co_dev.item2">Project-based collaboration</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-check-circle text-primary mr-2"></i>
-                            Dedicated development teams
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span data-i18n="services.co_dev.item3">Dedicated development teams</span>
                         </li>
                     </ul>
                 </div>
                 
                 <!-- Service 3 -->
-                <div class="service-card bg-dark border border-gray-800 rounded-xl p-8 transition-all duration-300 hover:border-primary/30">
-                    <div class="w-14 h-14 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mb-6">
-                        <i class="fas fa-ad text-2xl text-dark"></i>
+                <div class="service-card bg-dark border border-gray-800 rounded-xl p-8 transition-all duration-300 hover:border-accent/30">
+                    <div class="service-icon w-14 h-14 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-ad text-2xl text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Branded Content</h3>
-                    <p class="text-gray-300 mb-4">
-                        Immersive branded experiences in UEFN and Roblox that engage audiences and create memorable interactions.
+                    <h3 class="text-xl font-bold mb-3" data-i18n="services.branded.title">Branded Content</h3>
+                    <p class="text-gray-300 mb-4" data-i18n="services.branded.description">
+                        Immersive branded experiences that engage audiences and create memorable interactions.
                     </p>
                     <ul class="space-y-2 text-gray-400">
                         <li class="flex items-center">
-                            <i class="fas fa-check-circle text-primary mr-2"></i>
-                            Virtual showrooms
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span data-i18n="services.branded.item1">Virtual showrooms</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-check-circle text-primary mr-2"></i>
-                            Interactive campaigns
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span data-i18n="services.branded.item2">Interactive campaigns</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-check-circle text-primary mr-2"></i>
-                            Gamified brand experiences
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            <span data-i18n="services.branded.item3">Gamified brand experiences</span>
                         </li>
                     </ul>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Work Showcase -->
-    <section id="work" class="py-24 bg-darker">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    <span class="gradient-text">Our Work</span>
-                </h2>
-                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-                    Explore our portfolio of immersive experiences that push the boundaries of virtual reality.
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Project 1 -->
-                <div class="group relative overflow-hidden rounded-xl h-96">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 z-10"></div>
-                    <img src="https://images.unsplash.com/photo-1639762681057-1e71e2e6e9a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                         alt="VR Project" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <div class="absolute bottom-0 left-0 p-8 z-20">
-                        <span class="text-primary font-semibold">VR Training Simulation</span>
-                        <h3 class="text-2xl font-bold mt-1">Industrial Safety Training</h3>
-                        <p class="text-gray-300 mt-2">Immersive training program for hazardous work environments</p>
-                    </div>
-                </div>
-                
-                <!-- Project 2 -->
-                <div class="group relative overflow-hidden rounded-xl h-96">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 z-10"></div>
-                    <img src="https://images.unsplash.com/photo-1639762681485-07447b3ddc45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                         alt="Roblox Project" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <div class="absolute bottom-0 left-0 p-8 z-20">
-                        <span class="text-primary font-semibold">Branded Experience</span>
-                        <h3 class="text-2xl font-bold mt-1">Fashion World in Roblox</h3>
-                        <p class="text-gray-300 mt-2">Virtual shopping experience for a luxury fashion brand</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center px-6 py-3 border border-gray-700 rounded-lg text-white font-medium hover:bg-gray-800/50 transition-colors">
-                    View Full Portfolio
-                    <i class="fas fa-arrow-right ml-2"></i>
-                </a>
             </div>
         </div>
     </section>
@@ -334,118 +368,17 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div>
                     <h2 class="text-3xl md:text-4xl font-bold mb-6">
-                        <span class="gradient-text">About ORBITA</span>
+                        <span class="gradient-text" data-i18n="about.title">About ORBITA</span>
                     </h2>
-                    <p class="text-gray-300 mb-6">
-                        Founded in 2018, ORBITA has established itself as a leader in virtual reality development, 
-                        combining technical expertise with creative vision to deliver exceptional immersive experiences.
+                    <p class="text-gray-300 mb-6" data-i18n="about.description1">
+                        We turn challenges into immersive and interactive virtual experiences. At ORBITA, we believe every problem holds the potential to become a creative and engaging solution. Through technology and purpose, we help companies see, shape, and bring those ideas to life.
                     </p>
-                    <p class="text-gray-300 mb-6">
-                        Our team of VR specialists, game developers, and 3D artists work collaboratively to push the 
-                        boundaries of what's possible in virtual environments, whether for enterprise applications, 
-                        entertainment, or branded experiences.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4 mt-8">
-                        <div class="bg-dark border border-gray-800 rounded-lg p-4">
-                            <div class="text-3xl font-bold gradient-text">50+</div>
-                            <div class="text-gray-400">Projects Completed</div>
-                        </div>
-                        <div class="bg-dark border border-gray-800 rounded-lg p-4">
-                            <div class="text-3xl font-bold gradient-text">15+</div>
-                            <div class="text-gray-400">Industry Partners</div>
-                        </div>
-                    </div>
                 </div>
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                         alt="ORBITA Team" class="rounded-xl shadow-2xl">
-                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
-                        <i class="fas fa-vr-cardboard text-5xl text-dark"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="py-24 bg-darker">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    <span class="gradient-text">Client Testimonials</span>
-                </h2>
-                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-                    What our partners say about working with ORBITA
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="bg-dark border border-gray-800 rounded-xl p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                            <span class="font-bold text-dark">JD</span>
-                        </div>
-                        <div class="ml-4">
-                            <h4 class="font-bold">John Doe</h4>
-                            <p class="text-gray-400 text-sm">CTO, TechCorp</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">
-                        "ORBITA transformed our training program with their VR solution. The engagement metrics exceeded our expectations, and the feedback from employees has been overwhelmingly positive."
-                    </p>
-                    <div class="mt-4 text-primary">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="bg-dark border border-gray-800 rounded-xl p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                            <span class="font-bold text-dark">AS</span>
-                        </div>
-                        <div class="ml-4">
-                            <h4 class="font-bold">Alice Smith</h4>
-                            <p class="text-gray-400 text-sm">Marketing Director, BrandCo</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">
-                        "Our Roblox branded experience developed by ORBITA generated 3x more engagement than our traditional digital campaigns. Their creative approach was exactly what we needed."
-                    </p>
-                    <div class="mt-4 text-primary">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="bg-dark border border-gray-800 rounded-xl p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                            <span class="font-bold text-dark">RJ</span>
-                        </div>
-                        <div class="ml-4">
-                            <h4 class="font-bold">Robert Johnson</h4>
-                            <p class="text-gray-400 text-sm">CEO, GameDev Studio</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">
-                        "The co-development partnership with ORBITA allowed us to accelerate our VR game development by 40%. Their team integrated seamlessly with ours and delivered exceptional work."
-                    </p>
-                    <div class="mt-4 text-primary">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
+                    <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1478&q=80" 
+                         alt="VR Development" class="rounded-xl shadow-2xl">
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-secondary to-primary rounded-xl flex items-center justify-center">
+                        <i class="fas fa-vr-cardboard text-5xl text-white"></i>
                     </div>
                 </div>
             </div>
@@ -459,87 +392,59 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2">
                     <div class="p-12">
                         <h2 class="text-3xl md:text-4xl font-bold mb-6">
-                            <span class="gradient-text">Get in Touch</span>
+                            <span class="gradient-text" data-i18n="contact.title">Get in Touch</span>
                         </h2>
-                        <p class="text-gray-300 mb-8 max-w-lg">
+                        <p class="text-gray-300 mb-8 max-w-lg" data-i18n="contact.description">
                             Ready to bring your VR vision to life? Contact us to discuss your project requirements and how we can help.
                         </p>
                         
                         <div class="space-y-6">
                             <div class="flex items-start">
                                 <div class="flex-shrink-0 mt-1">
-                                    <i class="fas fa-envelope text-primary"></i>
+                                    <i class="fas fa-envelope text-accent"></i>
                                 </div>
                                 <div class="ml-4">
-                                    <h4 class="text-sm font-semibold text-gray-400">Email</h4>
-                                    <a href="mailto:contact@orbita.studio" class="text-white hover:text-primary transition-colors">contact@orbita.studio</a>
+                                    <h4 class="text-sm font-semibold text-gray-400" data-i18n="contact.email">Email</h4>
+                                    <a href="mailto:orbitastudiomain@gmail.com" class="text-white hover:text-accent transition-colors">orbitastudiomain@gmail.com</a>
                                 </div>
                             </div>
                             
                             <div class="flex items-start">
                                 <div class="flex-shrink-0 mt-1">
-                                    <i class="fas fa-phone-alt text-primary"></i>
+                                    <i class="fas fa-phone-alt text-accent"></i>
                                 </div>
                                 <div class="ml-4">
-                                    <h4 class="text-sm font-semibold text-gray-400">Phone</h4>
-                                    <a href="tel:+11234567890" class="text-white hover:text-primary transition-colors">+1 (123) 456-7890</a>
+                                    <h4 class="text-sm font-semibold text-gray-400" data-i18n="contact.phone">Phone</h4>
+                                    <a href="tel:+5511997642515" class="text-white hover:text-accent transition-colors">+55 11 99764 - 2515</a>
                                 </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 mt-1">
-                                    <i class="fas fa-map-marker-alt text-primary"></i>
-                                </div>
-                                <div class="ml-4">
-                                    <h4 class="text-sm font-semibold text-gray-400">Office</h4>
-                                    <p class="text-white">123 VR Avenue, San Francisco, CA 94107</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-12">
-                            <h4 class="text-sm font-semibold text-gray-400 mb-4">Follow Us</h4>
-                            <div class="flex space-x-4">
-                                <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors">
-                                    <i class="fab fa-youtube"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
                     
                     <div class="bg-darker p-12">
-                        <form class="space-y-6">
+                        <form id="contact-form" class="space-y-6">
                             <div>
-                                <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Name</label>
-                                <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <label for="name" class="block text-sm font-medium text-gray-300 mb-1" data-i18n="contact.form.name">Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" required>
                             </div>
                             
                             <div>
-                                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
-                                <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <label for="email" class="block text-sm font-medium text-gray-300 mb-1" data-i18n="contact.form.email">Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" required>
                             </div>
                             
                             <div>
-                                <label for="company" class="block text-sm font-medium text-gray-300 mb-1">Company</label>
-                                <input type="text" id="company" name="company" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <label for="company" class="block text-sm font-medium text-gray-300 mb-1" data-i18n="contact.form.company">Company</label>
+                                <input type="text" id="company" name="company" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
                             </div>
                             
                             <div>
-                                <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message</label>
-                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                                <label for="message" class="block text-sm font-medium text-gray-300 mb-1" data-i18n="contact.form.message">Message</label>
+                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" required></textarea>
                             </div>
                             
                             <div>
-                                <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-primary to-secondary text-dark font-bold rounded-lg hover:opacity-90 transition-opacity">
+                                <button type="submit" class="w-full px-6 py-4 btn-primary text-white font-bold rounded-lg hover:opacity-90 transition-opacity" data-i18n="contact.form.submit">
                                     Send Message
                                 </button>
                             </div>
@@ -555,67 +460,265 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <span class="text-2xl font-bold gradient-text">ORBITA</span>
-                    <p class="text-gray-400 mt-4">
+                    <span class="text-2xl font-bold logo-text">ORBITA</span>
+                    <p class="text-gray-400 mt-4" data-i18n="footer.description">
                         Pioneering virtual reality experiences that redefine digital interaction.
                     </p>
                 </div>
                 
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Services</h3>
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4" data-i18n="footer.services">Services</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Full Product Development</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Co-Development</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Branded Content</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">UEFN & Roblox</a></li>
+                        <li><a href="#services" class="text-gray-300 hover:text-white transition-colors" data-i18n="footer.service1">Full Product Development</a></li>
+                        <li><a href="#services" class="text-gray-300 hover:text-white transition-colors" data-i18n="footer.service2">Co-Development</a></li>
+                        <li><a href="#services" class="text-gray-300 hover:text-white transition-colors" data-i18n="footer.service3">Branded Content</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Company</h3>
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4" data-i18n="footer.company">Company</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Our Work</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Careers</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-white transition-colors" data-i18n="footer.company1">About Us</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Legal</h3>
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4" data-i18n="footer.legal">Legal</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Cookie Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-i18n="footer.legal1">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-i18n="footer.legal2">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-gray-400 text-sm">
-                    &copy; 2023 ORBITA Studio. All rights reserved.
+                    &copy; 2025 ORBITA Studio. All rights reserved.
                 </p>
-                <div class="mt-4 md:mt-0">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm mr-6">Privacy</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm mr-6">Terms</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Contact</a>
-                </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Simple script for smooth scrolling
+        // Language translations
+        const translations = {
+            en: {
+                // Navigation
+                "nav.services": "Services",
+                "nav.about": "About",
+                "nav.contact": "Contact",
+                "nav.start_project": "Start Project",
+                
+                // Hero
+                "hero.ideas": "Ideas that",
+                "hero.walk_around": "walk around.",
+                "hero.description": "ORBITA crafts immersive VR experiences that elevate brand presence, spark engagement, and turn storytelling into strategic impact.",
+                "hero.get_started": "Get Started",
+                "hero.explore_services": "Explore Services",
+                
+                // Services
+                "services.title": "Our Services",
+                "services.description": "Comprehensive VR solutions tailored to your business needs, from concept to deployment.",
+                
+                "services.full_dev.title": "Full Product Development",
+                "services.full_dev.description": "End-to-end VR development from initial concept to final deployment. We handle design, development, testing, and launch.",
+                "services.full_dev.item1": "Concept ideation",
+                "services.full_dev.item2": "Technical architecture",
+                "services.full_dev.item3": "Quality assurance",
+                
+                "services.co_dev.title": "Co-Development",
+                "services.co_dev.description": "Plug into a creative and hands-on team to bring your interactive ideas to life. We adapt to your workflow with flexible collaboration models that fit your project needs.",
+                "services.co_dev.item1": "Staff augmentation",
+                "services.co_dev.item2": "Project-based collaboration",
+                "services.co_dev.item3": "Dedicated development teams",
+                
+                "services.branded.title": "Branded Content",
+                "services.branded.description": "Immersive branded experiences that engage audiences and create memorable interactions.",
+                "services.b brandeded.item1": "Virtual showrooms",
+                "services.branded.item2": "Interactive campaigns",
+                "services.branded.item3": "Gamified brand experiences",
+                
+                // About
+                "about.title": "About ORBITA",
+                "about.description1": "We turn challenges into immersive and interactive virtual experiences. At ORBITA, we believe every problem holds the potential to become a creative and engaging solution. Through technology and purpose, we help companies see, shape, and bring those ideas to life.",
+                
+                // Contact
+                "contact.title": "Get in Touch",
+                "contact.description": "Ready to bring your VR vision to life? Contact us to discuss your project requirements and how we can help.",
+                "contact.email": "Email",
+                "contact.phone": "Phone",
+                "contact.form.name": "Name",
+                "contact.form.email": "Email",
+                "contact.form.company": "Company",
+                "contact.form.message": "Message",
+                "contact.form.submit": "Send Message",
+                
+                // Footer
+                "footer.description": "Pioneering virtual reality experiences that redefine digital interaction.",
+                "footer.services": "Services",
+                "footer.service1": "Full Product Development",
+                "footer.service2": "Co-Development",
+                "footer.service3": "Branded Content",
+                "footer.company": "Company",
+                "footer.company1": "About Us",
+                "footer.legal": "Legal",
+                "footer.legal1": "Privacy Policy",
+                "footer.legal2": "Terms of Service"
+            },
+            pt: {
+                // Navigation
+                "nav.services": "Serviços",
+                "nav.about": "Sobre",
+                "nav.contact": "Contato",
+                "nav.start_project": "Iniciar Projeto",
+                
+                // Hero
+                "hero.ideas": "Ideias que",
+                "hero.walk_around": "andam por aí.",
+                "hero.description": "A ORBITA cria experiências imersivas em VR que elevam a presença da marca, geram engajamento e transformam narrativas em impacto estratégico.",
+                "hero.get_started": "Começar Agora",
+                "hero.explore_services": "Explorar Serviços",
+                
+                // Services
+                "services.title": "Nossos Serviços",
+                "services.description": "Soluções VR abrangentes adaptadas às necessidades do seu negócio, desde o conceito até a implantação.",
+                
+                "services.full_dev.title": "Desenvolvimento Completo",
+                "services.full_dev.description": "Desenvolvimento VR completo desde o conceito inicial até a implantação final. Lidamos com design, desenvolvimento, testes e lançamento.",
+                "services.full_dev.item1": "Ideação de conceito",
+                "services.full_dev.item2": "Arquitetura técnica",
+                "services.full_dev.item3": "Garantia de qualidade",
+                
+                "services.co_dev.title": "Co-Desenvolvimento",
+                "services.co_dev.description": "Conecte-se a uma equipe criativa e prática para dar vida às suas ideias interativas. Nós nos adaptamos ao seu fluxo de trabalho com modelos flexíveis de colaboração que atendem às necessidades do seu projeto.",
+                "services.co_dev.item1": "Aumento de equipe",
+                "services.co_dev.item2": "Colaboração por projeto",
+                "services.co_dev.item3": "Equipes dedicadas",
+                
+                "services.branded.title": "Conteúdo de Marca",
+                "services.branded.description": "Experiências de marca imersivas que engajam o público e criam interações memoráveis.",
+                "services.branded.item1": "Showrooms virtuais",
+                "services.branded.item2": "Campanhas interativas",
+                "services.branded.item3": "Experiências de marca gamificadas",
+                
+                // About
+                "about.title": "Sobre a ORBITA",
+                "about.description1": "Transformamos desafios em experiências virtuais imersivas e interativas. Na ORBITA, acreditamos que todo problema guarda o potencial de se tornar uma solução criativa e envolvente. Através da tecnologia e propósito, ajudamos empresas a ver, moldar e dar vida a essas ideias.",
+                
+                // Contact
+                "contact.title": "Entre em Contato",
+                "contact.description": "Pronto para dar vida à sua visão de VR? Entre em contato para discutir os requisitos do seu projeto e como podemos ajudar.",
+                "contact.email": "E-mail",
+                "contact.phone": "Telefone",
+                "contact.form.name": "Nome",
+                "contact.form.email": "E-mail",
+                "contact.form.company": "Empresa",
+                "contact.form.message": "Mensagem",
+                "contact.form.submit": "Enviar Mensagem",
+                
+                // Footer
+                "footer.description": "Pioneira em experiências de realidade virtual que redefinem a interação digital.",
+                "footer.services": "Serviços",
+                "footer.service1": "Desenvolvimento Completo",
+                "footer.service2": "Co-Desenvolvimento",
+                "footer.service3": "Conteúdo de Marca",
+                "footer.company": "Empresa",
+                "footer.company1": "Sobre Nós",
+                "footer.legal": "Jurídico",
+                "footer.legal1": "Política de Privacidade",
+                "footer.legal2": "Termos de Serviço"
+            }
+        };
+
+        // Language switch functionality
+        const languageSwitch = document.getElementById('language-switch');
+        const languageSlider = document.querySelector('.language-slider');
+        let currentLanguage = 'en';
+
+        // Function to update all text elements with translations
+        function updateLanguage(lang) {
+            currentLanguage = lang;
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+        }
+
+        // Check for saved language preference or use browser language
+        const savedLanguage = localStorage.getItem('orbita-language');
+        const browserLanguage = navigator.language.split('-')[0];
+        
+        if (savedLanguage) {
+            currentLanguage = savedLanguage;
+            languageSwitch.checked = savedLanguage === 'pt';
+            updateLanguage(savedLanguage);
+        } else if (browserLanguage === 'pt') {
+            currentLanguage = 'pt';
+            languageSwitch.checked = true;
+            updateLanguage('pt');
+        }
+
+        // Toggle language on switch change
+        languageSwitch.addEventListener('change', function() {
+            const newLanguage = this.checked ? 'pt' : 'en';
+            localStorage.setItem('orbita-language', newLanguage);
+            updateLanguage(newLanguage);
+        });
+
+        // Initialize language toggle text
+        updateLanguage(currentLanguage);
+
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Adjust for fixed header
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update URL without jumping
+                    history.pushState(null, null, targetId);
+                }
             });
         });
         
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
+            const message = document.getElementById('message').value;
+            
+            const subject = `New Contact Form Submission from ${name}`;
+            const body = `Name: ${name}\nEmail: ${email}\nCompany: ${company}\n\nMessage:\n${message}`;
+            
+            // Open default mail client with pre-filled email
+            window.location.href = `mailto:orbitastudiomain@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Optional: Show success message
+            alert(currentLanguage === 'en' ? 'Thank you for your message! Your email client will now open.' : 'Obrigado pela sua mensagem! Seu cliente de e-mail será aberto agora.');
+            
+            // Reset form
+            this.reset();
+        });
+
         // Mobile menu toggle would go here
         // This is just a placeholder for the actual implementation
     </script>
